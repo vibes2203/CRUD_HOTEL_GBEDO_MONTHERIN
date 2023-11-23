@@ -4,17 +4,18 @@
     @section('title', 'Home Hotel')
 
     @section('contents')
-        <div class="container border p-4">
+        <div class="container border border-3 p-4 mt-5">
             <div class="d-flex align-items-center justify-content-between">
-                <h1 class="mb-0">List Hotels</h1>
-                <a href="{{ route('hotels.create') }}" class="btn btn-primary">Ajouter un Hôtel</a>
+                <h1 class="mb-0">Liste des Hôtels</h1>
             </div>
-            <hr />
+            <hr class="my-4" />
+
             @if(Session::has('success'))
                 <div class="alert alert-success" role="alert">
                     {{ Session::get('success') }}
                 </div>
             @endif
+
             <table class="table table-hover">
                 <thead class="thead-light">
                     <tr>
@@ -45,12 +46,12 @@
                                 <td class="align-middle">{{ $hotel->statut }}</td>
                                 <td class="align-middle">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('hotels.show', $hotel->id) }}" class="btn btn-secondary">Detail</a>
-                                        <a href="{{ route('hotels.edit', $hotel->id)}}" class="btn btn-warning">Edit</a>
-                                        <form action="{{ route('hotels.destroy', $hotel->id) }}" method="POST" onsubmit="return confirm('Delete?')">
+                                        <a href="{{ route('hotels.show', $hotel->id) }}" class="btn btn-secondary">Détail</a>
+                                        <a href="{{ route('hotels.edit', $hotel->id)}}" class="btn btn-warning">Modifier</a>
+                                        <form action="{{ route('hotels.destroy', $hotel->id) }}" method="POST" onsubmit="return confirm('Supprimer ?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                            <button class="btn btn-danger" type="submit">Supprimer</button>
                                         </form>
                                     </div>
                                 </td>
@@ -58,13 +59,17 @@
                         @endforeach
                     @else
                         <tr>
-                            <td class="text-center" colspan="10">No hotels found</td>
+                            <td class="text-center" colspan="10">Aucun hôtel trouvé</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
+
+            <div class="text-center mt-4">
+                <a href="{{ route('hotels.create') }}" class="btn btn-success">Ajouter un Hôtel</a>
+            </div>
         </div>
     @endsection
 @else
-    <p>Vous devez être connecté pour accéder à la liste des hôtels.</p>
+    <p class="mt-5">Vous devez être connecté pour accéder à la liste des hôtels.</p>
 @endif
